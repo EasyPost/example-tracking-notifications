@@ -1,0 +1,4 @@
+env/*
+*.pyc
+
+sms-twilio/config.py
