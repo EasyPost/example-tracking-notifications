@@ -19,7 +19,7 @@ Run `$ pip install -r requirements.txt` to install Flask, the EasyPost Python cl
 
 Rename `config-example.py` to `config.py`, and replace the placeholders with your API authorization keys. Replace `SMS_TO_NUMBER` with a number of a cell phone that can receive SMS messages.
 
-It's time to start the app! Run `$ python app.py`, then run `$ ngrok http 12345` in another terminal to expose the app publicly through ngrok. Ngrok will give you a URL that looks something like `https://something.ngrok.io`; copy it. This is the webhook URL that EasyPost will send an update to when the fake "package" has a tracker event. We need to let need to EasyPost know about this URL, so we'll create a new webhook with cURL:
+It's time to start the app! Run `$ python app.py`, then run `$ ngrok http 12345` in another terminal to expose the app publicly through ngrok. Ngrok will give you a URL that looks something like `https://something.ngrok.io`; copy it. This is the webhook URL that EasyPost will send an update to when the fake "package" has a tracker event. We need to let EasyPost know about this URL, so we'll create a new webhook with cURL:
 
 `$ curl -X POST easypost.com/api/v2/webhooks -d 'webhook[url]=http://something.ngrok.io&webhook[mode]=test' -u '123:'`
 
