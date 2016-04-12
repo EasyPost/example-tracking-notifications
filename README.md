@@ -19,9 +19,13 @@ Run `$ pip install -r requirements.txt` to install Flask, the EasyPost Python cl
 
 Rename `config-example.py` to `config.py`, and replace the placeholders with your API authorization keys. Replace `SMS_TO_NUMBER` with a number of a cell phone that can receive SMS messages.
 
-It's time to start the app! Run `$ python app.py`, then run `$ ngrok http 12345` in another terminal to expose the app publicly through ngrok. Ngrok will give you a URL that looks something like `https://something.ngrok.io`. This is the webhook URL that EasyPost will send an update to when the fake "package" has a tracker event. Copy it and paste it into a new test webhook in your [EasyPost settings](https://www.easypost.com/account#/webhooks). Make sure it's a test webhook, not a production one.
+It's time to start the app! Run `$ python app.py`, then run `$ ngrok http 12345` in another terminal to expose the app publicly through ngrok. Ngrok will give you a URL that looks something like `https://something.ngrok.io`; copy it. This is the webhook URL that EasyPost will send an update to when the fake "package" has a tracker event. We need to let need to EasyPost know about this URL, so we'll create a new webhook with cURL:
 
-It's showtime! Run the following command with cURL, replacing "123" with your EasyPost test API key:
+`$ curl -X POST easypost.com/api/v2/webhooks -d 'webhook[url]=http://something.ngrok.io&webhook[mode]=test' -u '123:'`
+
+(Replace "something.ngrok.io" with the ngrok URL you copied, and "123" with your EasyPost test API key).
+
+It's showtime! Run this command to start tracking a test shipment, again replacing "123" with your test API key:
 
 `$ curl -X POST https://easypost.com/v2/trackers -d 'tracker[tracking_code]=EZ2000000002' -u '123:'`
 
