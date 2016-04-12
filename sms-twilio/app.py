@@ -10,8 +10,6 @@ twilio_client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'], app.config['T
 
 @app.route('/easypost-webhook', methods=['POST'])
 def process_webhook():
-    response = request.get_json()
-
     #
     # Here, we check to see if the webhook is about a tracker event.
     # We'll know it is if the object is 'Event' and the description is 'tracker.updated':
@@ -19,7 +17,7 @@ def process_webhook():
     #
 
     if response['object'] == 'Event' and response['description'] == 'tracker.updated':
-        event = easypost.Event.construct_from(response, None)
+        event = easypost.Event.receive(request.data)
         tracker = event.result
 
         #
