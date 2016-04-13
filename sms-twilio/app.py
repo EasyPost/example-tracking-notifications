@@ -39,7 +39,7 @@ def process_webhook():
         for tracking_detail in reversed(tracker.tracking_details):
             if tracking_detail.status == tracker.status:
                 message += "%s says: %s in %s." % (tracker.carrier, tracking_detail.message, tracking_detail.tracking_location.city)
-
+                break
         #
         # In a production environment, you'd want to send to the message to a specific
         # customer's phone number. Here, we just use a predefined value from settings.
