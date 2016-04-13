@@ -41,3 +41,7 @@ You could:
 * Alert customers with the name of the person that signed for their package
 * Let a customer know when their package enters their home state, or is out for delivery
 * Send email notifications in addition to SMS messages
+
+**Unit tests**
+
+`$ python sms_tracking_tests.py`

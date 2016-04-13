@@ -5,18 +5,18 @@ import easypost
 app = Flask(__name__)
 app.config.from_object('config')
 
-easypost.api_key = app.config['EASYPOST_API_KEY']
-twilio_client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'], app.config['TWILIO_AUTH_TOKEN'])
-
 @app.route('/easypost-webhook', methods=['POST'])
 def process_webhook():
     response = request.get_json()
+
+    easypost.api_key = app.config['EASYPOST_API_KEY']
+    twilio_client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'], app.config['TWILIO_AUTH_TOKEN'])
+
     #
     # Here, we check to see if the webhook is about a tracker event.
     # We'll know it is if the object is 'Event' and the description is 'tracker.updated':
     # https://www.easypost.com/tracking-guide#step2
     #
-
     if response['object'] == 'Event' and response['description'] == 'tracker.updated':
         event = easypost.Event.receive(request.data)
         tracker = event.result
@@ -28,7 +28,6 @@ def process_webhook():
         # Here, we check the delivery status
         # and tell the customer about the latest update on their package.
         #
-
         message = "Hey, this is FunCompany. "
 
         if tracker.status == 'delivered':
@@ -48,7 +47,6 @@ def process_webhook():
         # In a production environment, you'd want to send to the message to a specific
         # customer's phone number. Here, we just use a predefined value from settings.
         #
-
         twilio_client.messages.create(
             to = app.config['SMS_TO_NUMBER'],
             from_ = app.config['SMS_FROM_NUMBER'],
@@ -56,6 +54,8 @@ def process_webhook():
         )
 
         return "SMS update was sent to the customer!"
+    else:
+        return "Not a Tracker event, so nothing to do here for now..."
 
 if __name__ == "__main__":
     app.run(debug=True, port=12345)
