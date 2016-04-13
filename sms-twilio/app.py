@@ -10,6 +10,7 @@ twilio_client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'], app.config['T
 
 @app.route('/easypost-webhook', methods=['POST'])
 def process_webhook():
+    response = request.get_json()
     #
     # Here, we check to see if the webhook is about a tracker event.
     # We'll know it is if the object is 'Event' and the description is 'tracker.updated':
@@ -35,8 +36,9 @@ def process_webhook():
         else:
             message += "There's an update on your package: "
 
-        last_update = tracker.tracking_details[-1]
-        message += "%s says: %s in %s." % (tracker.carrier, last_update.message, last_update.tracking_location.city)
+        for tracking_detail in reversed(tracker.tracking_details):
+            if tracking_detail.status == tracker.status:
+                message += "%s says: %s in %s." % (tracker.carrier, tracking_detail.message, tracking_detail.tracking_location.city)
 
         #
         # In a production environment, you'd want to send to the message to a specific
