@@ -1,4 +1,4 @@
 env/*
 *.pyc
 
-sms-twilio/config.py
+sms_tracking/config.py

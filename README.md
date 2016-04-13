@@ -2,15 +2,15 @@
 
 The EasyPost [Tracking API](https://www.easypost.com/tracking-guide) makes it simple to get EasyPost tracking updates with webhooks. These example applications show some creative ways to update you (and your customers) with the latest information on their shipments!
 
-### Example: Sending SMS with Twilio
+### Example: Sending SMS Tracking Notifications
 
-*/sms-twilio*
+*/sms_tracking*
 
 This example application uses Flask, the [EasyPost Python client](https://github.com/EasyPost/easypost-python), and the [Twilio API](https://www.twilio.com/api) to send a formatted SMS message to a customer after a tracking event occurs on their shipment.
 
 **Try this demo on your computer!**
 
-Download the contents of this repository and use a shell to navigate to `sms-twilio/`.
+Download the contents of this repository and use a shell to navigate to `sms_tracking/`.
 Make sure you have [Python](https://www.python.org) and [pip](https://pip.pypa.io/en/stable/installing/) installed.
 
 Since you're going to be using a test Tracker and sending SMS messages, you'll need your test API key from EasyPost (which you can find [here](https://www.easypost.com/account#/api-keys)) and an account SID, auth token, and phone number from [Twilio](https://www.twilio.com). To receive webhooks from EasyPost locally, you'll need to install [ngrok](https://ngrok.com/#download).
@@ -19,7 +19,7 @@ Run `$ pip install -r requirements.txt` to install Flask, the EasyPost Python cl
 
 Rename `config-example.py` to `config.py`, and replace the placeholders with your API authorization keys. Replace `SMS_TO_NUMBER` with a number of a cell phone that can receive SMS messages.
 
-It's time to start the app! Run `$ python app.py`, then run `$ ngrok http 12345` in another shell to expose the app publicly through ngrok. Ngrok will give you a URL that looks something like `https://xxxxxxxx.ngrok.io`; copy it. This is the webhook URL that EasyPost will send an update to when the fake "package" has a tracker event. We need to let EasyPost know about this URL, so we'll create a new webhook with cURL:
+It's time to start the app! Run `$ python sms_tracking.py`, then run `$ ngrok http 12345` in another shell to expose the app publicly through ngrok. Ngrok will give you a URL that looks something like `https://xxxxxxxx.ngrok.io`; copy it. This is the webhook URL that EasyPost will send an update to when the fake "package" has a tracker event. We need to let EasyPost know about this URL, so we'll create a new webhook with cURL:
 
 `$ curl -X POST easypost.com/api/v2/webhooks -d 'webhook[url]=http://xxxxxxxx.ngrok.io/easypost-webhook&webhook[mode]=test' -u 'your-test-api-key:'`
 
