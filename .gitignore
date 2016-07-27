@@ -2,3 +2,4 @@ env/*
 *.pyc
 
 sms_tracking/config.py
+.env
