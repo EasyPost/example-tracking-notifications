@@ -3,5 +3,4 @@ env/*
 
 sms_tracking/config.py
 .env
-sms_tracking/.DS_Store
-/.DS_Store
+.DS_Store
