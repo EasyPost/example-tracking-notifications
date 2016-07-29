@@ -61,7 +61,7 @@ Make sure you have the following requirements.
 1. A Windows or Mac computer running [Ruby](https://www.ruby-lang.org/en/)
    [Bundler](http://bundler.io/)
 1. An [EasyPost account](https://www.easypost.com/signup)
-1. A [SendGrid account](https://sendgrid.com/pricing/)
+1. A [SendGrid account](https://app.sendgrid.com)
 
 Since you're going to be using a test Tracker and sending Emails, you'll need your test API key from EasyPost (which you can find [here](https://www.easypost.com/account#/api-keys)) and an API key from [SendGrid](https://www.sendgrid.com). To receive webhooks from EasyPost locally, you'll need to install [ngrok](https://ngrok.com/#download).
 

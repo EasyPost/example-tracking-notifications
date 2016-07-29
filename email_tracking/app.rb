@@ -18,9 +18,7 @@ class App < Sinatra::Base
   end
 
  post '/easypost-webhook' do
-    request.body.rewind
-    request_string = request.body.read
-    response = JSON.parse(request_string)
+    response = JSON.parse(request.body.read)
 
     if response['object'] == 'Event' && response['description'] == 'tracker.updated'
       event = EasyPost::Event.receive(request_string)
@@ -34,7 +32,7 @@ class App < Sinatra::Base
       end
 
       td = tracker.tracking_details.reverse.find{|tracking_detail| tracking_detail.status == tracker.status}
-      message += "%s says: %s in %s." % [tracker.carrier,tracking_detail.message,tracking_detail.tracking_location.city] if td.present?
+      message += "#{tracker.carrier} says: #{td.message} in #{td.tracking_location.city}." if td.present?
 
       from = SendGrid::Email.new(email: 'test@fromaddress.com')
       subject = 'Hello World from the SendGrid Ruby Library!'
