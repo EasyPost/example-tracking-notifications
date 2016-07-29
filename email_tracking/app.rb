@@ -31,7 +31,7 @@ class App < Sinatra::Base
         message += "There's an update on your package: "
       end
 
-      td = tracker.tracking_details.reverse.find{|tracking_detail| tracking_detail.status == tracker.status}
+      td = tracker.tracking_details.reverse.find{ |tracking_detail| tracking_detail.status == tracker.status }
       message += "#{tracker.carrier} says: #{td.message} in #{td.tracking_location.city}." if td.present?
 
       from = SendGrid::Email.new(email: 'test@fromaddress.com')
