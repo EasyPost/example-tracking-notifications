@@ -17,7 +17,7 @@ class App < Sinatra::Base
     set :sendgrid, SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
   end
 
- post '/easypost-webhook' do
+  post '/easypost-webhook' do
     response = JSON.parse(request.body.read)
 
     if response['object'] == 'Event' && response['description'] == 'tracker.updated'
