@@ -17,7 +17,7 @@ class App < Sinatra::Base
     set :sendgrid, SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
   end
 
- post '/easypost-webhook' do
+  post '/easypost-webhook' do
     request_string = request.body.read
     parsed_request = JSON.parse(request_string)
 
