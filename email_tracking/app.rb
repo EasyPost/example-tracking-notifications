@@ -18,9 +18,10 @@ class App < Sinatra::Base
   end
 
  post '/easypost-webhook' do
-    response = JSON.parse(request.body.read)
+    request_string = request.body.read
+    parsed_request = JSON.parse(request_string)
 
-    if response['object'] == 'Event' && response['description'] == 'tracker.updated'
+    if parsed_request['object'] == 'Event' && parsed_request['description'] == 'tracker.updated'
       event = EasyPost::Event.receive(request_string)
       tracker = event.result
 
