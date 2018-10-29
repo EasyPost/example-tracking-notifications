@@ -4,6 +4,7 @@ import unittest
 from mock import Mock, patch
 import json
 
+
 class SmsTrackingTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -25,7 +26,8 @@ class SmsTrackingTestCase(unittest.TestCase):
     # Test that if the JSON sent is not an Event object, the script still returns 200
     #
     def test_non_event_request(self):
-        result = self.app.post('/easypost-webhook',
+        result = self.app.post(
+            '/easypost-webhook',
             data=json.dumps(dict(object='FakeObject', description='fake.description')),
             content_type='application/json'
         )
@@ -41,7 +43,8 @@ class SmsTrackingTestCase(unittest.TestCase):
         TwilioRestClient.return_value = mock_client
 
         delivered_data = open(os.path.join(self.TEST_ROOT, 'test_data', 'delivered.json')).read()
-        result = self.app.post('/easypost-webhook',
+        result = self.app.post(
+            '/easypost-webhook',
             data=delivered_data,
             content_type='application/json'
         )
@@ -64,7 +67,8 @@ class SmsTrackingTestCase(unittest.TestCase):
         TwilioRestClient.return_value = mock_client
 
         in_transit_data = open(os.path.join(self.TEST_ROOT, 'test_data', 'in_transit.json')).read()
-        result = self.app.post('/easypost-webhook',
+        result = self.app.post(
+            '/easypost-webhook',
             data=in_transit_data,
             content_type='application/json'
         )
@@ -76,6 +80,7 @@ class SmsTrackingTestCase(unittest.TestCase):
             to='2432615184',
             body="Hey, this is FunCompany. There's an update on your package: UPS says: ARRIVAL SCAN in SAN FRANCISCO."
         )
+
 
 if __name__ == '__main__':
     unittest.main()

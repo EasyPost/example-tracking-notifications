@@ -1,9 +1,10 @@
 from flask import Flask, request
-from twilio.rest import TwilioRestClient
+from twilio.rest import Client as TwilioRestClient
 import easypost
 
 app = Flask(__name__)
 app.config.from_object('config')
+
 
 @app.route('/easypost-webhook', methods=['POST'])
 def process_webhook():
@@ -48,14 +49,15 @@ def process_webhook():
         # customer's phone number. Here, we just use a predefined value from settings.
         #
         twilio_client.messages.create(
-            to = app.config['SMS_TO_NUMBER'],
-            from_ = app.config['SMS_FROM_NUMBER'],
-            body = message
+            to=app.config['SMS_TO_NUMBER'],
+            from_=app.config['SMS_FROM_NUMBER'],
+            body=message
         )
 
         return "SMS update was sent to the customer!"
     else:
         return "Not a Tracker event, so nothing to do here for now..."
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=12345)
