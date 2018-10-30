@@ -4,3 +4,4 @@ env/*
 sms_tracking/config.py
 .env
 .DS_Store
+Gemfile.lock
